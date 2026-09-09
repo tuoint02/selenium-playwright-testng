@@ -98,6 +98,16 @@ public class Playwright_03_Locator {
         page.locator("//input[@id='input-firstname']");
     }
 
+    @Test
+    public void TC_10_Xpath_Text() throws InterruptedException {
+        page.navigate("https://opencart.abstracta.us/index.php?route=account/register");
+        page.locator("//label[text()='First Name']");
+        page.locator("//p[contains(text(),'If you already have an account with us, please login at the')]");
+        page.locator("//input[@id='input-firstname' or @name='firstname']");
+        page.locator("");
+    }
+
+
     @AfterClass
     public void afterClass(){
         browser.close();
