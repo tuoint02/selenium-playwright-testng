@@ -39,3 +39,4 @@ build/
 .DS_Store
 ### IntelliJ Personal Files ###
 .idea/workspace.xml
+/.idea/
