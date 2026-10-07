@@ -28,7 +28,7 @@ public class Selenium_05_Textbox_TextArea {
         driver.findElement(By.cssSelector("//input[@name='password']")).sendKeys("admin123");
         driver.findElement(By.cssSelector("button.orangehrm-login-button")).click();
 
-        // cmnr
+        // comment
         private boolean isLoadingIconHidden() {
             return new WebDriverWait(driver, Duration.ofSeconds(30)).until(ExpectedConditions.invisibilityOfAllElements(driver.findElements(By.cssSelector(""))));
         }
