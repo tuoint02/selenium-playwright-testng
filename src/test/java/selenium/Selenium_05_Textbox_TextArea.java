@@ -42,8 +42,7 @@ public class Selenium_05_Textbox_TextArea {
         driver.findElement(By.cssSelector("input[name='firstName']")).sendKeys("Tuoi");
         driver.findElement(By.cssSelector("input[name='lastName']")).sendKeys("Nguyen");
 
-        String employeeID = driver.findElement(By.xpath("//label[text()='Employee Id']/parent::div/" +
-                "following-sibling::div/input")).getDomProperty("value");
+        String employeeID = driver.findElement(By.xpath("//label[text()='Employee Id']/parent::div/following-sibling::div/input")).getDomProperty("value");
 
         driver.findElement(By.xpath("//button[contains(string(),'Save')]")).click();
         Assert.assertTrue(isLoadingIconHidden());
