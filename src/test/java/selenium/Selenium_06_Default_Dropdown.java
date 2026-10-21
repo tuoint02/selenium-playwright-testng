@@ -72,7 +72,9 @@ public class Selenium_06_Default_Dropdown {
 
         Assert.assertEquals(dealerList.size(),16);
 
-
+        for (WebElement dealer : dealerList){
+            System.out.println("Dealer Name = " + dealer.getText());
+        }
     }
 
     @AfterClass
