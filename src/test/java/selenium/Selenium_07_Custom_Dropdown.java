@@ -24,30 +24,32 @@ public class Selenium_07_Custom_Dropdown {
     }
 
     @Test
-    public void TC_01_Sauce() {
+    public void TC_01_Sauce() throws InterruptedException {
         driver.get("http://jqueryui.com/resources/demos/selectmenu/default.html");
 
-        // 1 - Click vào dropdown
-        driver.findElement(By.cssSelector("span#speed-button")).click();
+        selectDropDownItem("span#speed-button","ul#speed-menu div.ui-menu-item-wrapper","Fast");
+        Thread.sleep(2000);
+        selectDropDownItem("span#speed-button","ul#speed-menu div.ui-menu-item-wrapper","Slow");
+        Thread.sleep(2000);
+        selectDropDownItem("span#speed-button","ul#speed-menu div.ui-menu-item-wrapper","Fast");
+        Thread.sleep(2000);
 
-        // 2- Chờ cho tất cả các item được load ra
-        // Bắt được locator nào đại diện cho tất cả các item
-        // Bắt đến thẻ nào chứa text của item
-        new WebDriverWait(driver, Duration.ofSeconds(15)).until(ExpectedConditions.
-                presenceOfAllElementsLocatedBy(By.cssSelector("ul#speed-menu div.ui-menu-item-wrapper")));
-        // 3 - Duyệt qua hết tất cả các item
-        List<WebElement> listItems = driver.findElements(By.cssSelector("ul#speed-menu div.ui-menu-item-wrapper"));
+    }
+
+    private void selectDropDownItem(String parentLocator, String childLocaltor, String textItem) throws InterruptedException {
+        driver.findElement(By.cssSelector(parentLocator)).click();
+
+        List<WebElement> listItems = new WebDriverWait(driver, Duration.ofSeconds(15)).until(ExpectedConditions.
+                presenceOfAllElementsLocatedBy(By.cssSelector(childLocaltor)));
+
+        Thread.sleep(1000);
+
         for (WebElement item: listItems){
-
-            // 4 - Kiểm tra label text nếu đúng thì click chọn/ nếu không đúng thì duyệt tiếp
-            String itemText = item.getText();
-            System.out.println("itemText = " +itemText);
-            if (itemText.equals("Fast")){
+            if (item.getText().equals(textItem)){
                 item.click();
                 break;
             }
         }
-
     }
 
     @Test
