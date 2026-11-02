@@ -12,8 +12,8 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import java.awt.*;
 import java.time.Duration;
+import java.util.List;
 
 public class Selenium_08_Button {
     WebDriver driver;
@@ -58,6 +58,71 @@ public class Selenium_08_Button {
     @Test
     public void TC_02_KendoUI_Checkbox() {
         driver.get("https://demos.telerik.com/kendo-ui/checkbox/index");
+
+        By rearSideCheckboxBy = By.xpath("//label[text()='Rear side airbags']/preceding-sibling::span/input");
+        By leatherTrimCheckboxBy = By.xpath("//label[text()='Leather trim']/preceding-sibling::span/input");
+        By dualZoneCheckboxBy = By.xpath("//label[text()='Dual-zone air conditioning']/preceding-sibling::span/input");
+
+        // Click chọn rearSideCheckboxBy
+        if (!driver.findElement(rearSideCheckboxBy).isSelected()){
+            driver.findElement(rearSideCheckboxBy).click();
+        }
+
+        // Verify chọn hoặc chưa chọn
+        Assert.assertTrue(driver.findElement(rearSideCheckboxBy).isSelected());
+        Assert.assertTrue(driver.findElement(leatherTrimCheckboxBy).isSelected());
+        Assert.assertFalse(driver.findElement(dualZoneCheckboxBy).isSelected());
+
+        // Verify disabled/ enabled
+        Assert.assertTrue(driver.findElement(rearSideCheckboxBy).isEnabled());
+        Assert.assertFalse(driver.findElement(leatherTrimCheckboxBy).isEnabled());
+        Assert.assertTrue(driver.findElement(dualZoneCheckboxBy).isEnabled());
+
+        // Click chọn dual-Zone Checkbox
+        if (!driver.findElement(dualZoneCheckboxBy).isSelected()){
+            driver.findElement(dualZoneCheckboxBy).click();
+        }
+
+        Assert.assertTrue(driver.findElement(dualZoneCheckboxBy).isSelected());
+
+    }
+
+    @Test
+    public void TC_03_Jotform_Checkbox() {
+        driver.get("https://automationfc.github.io/multiple-fields/");
+
+        List<WebElement> checkboxes = driver.findElements(By.cssSelector("input[type='checkbox']"));
+
+        // Kiểm tra toàn bộ checkbox chưa chọn --> dùng vòng lặp
+        for (WebElement checkbox : checkboxes){
+            Assert.assertFalse(checkbox.isSelected());
+        }
+
+        // Chọn hết toàn bộ
+        for (WebElement checkbox : checkboxes){
+            if (!checkbox.isSelected()){
+                checkbox.click();
+            }
+        }
+
+        // Kiểm tra toàn bộ checkbox được chọn rồi (selected)
+        for (WebElement checkbox : checkboxes){
+            Assert.assertTrue(checkbox.isSelected());
+        }
+
+        // Bỏ chọn hết toàn bộ
+        for (WebElement checkbox : checkboxes){
+            if (checkbox.isSelected()){
+                checkbox.click();
+            }
+        }
+
+        // Chọn 1 checkbox nào đó trong tất cả
+        for (WebElement checkbox : checkboxes){
+            if (!checkbox.isSelected() && checkbox.getDomProperty("value").equals("Diabetes")){
+                checkbox.click();
+            }
+        }
 
     }
 
