@@ -15,7 +15,7 @@ import org.testng.annotations.Test;
 import java.time.Duration;
 import java.util.List;
 
-public class Selenium_08_Button {
+public class Selenium_08_Button_Checkbox_Radio {
     WebDriver driver;
 
     @BeforeClass
@@ -123,6 +123,33 @@ public class Selenium_08_Button {
                 checkbox.click();
             }
         }
+    }
+
+    @Test
+    public void TC_04_RadioButton() {
+        driver.get("https://demos.telerik.com/kendo-ui/radiobutton/index");
+
+        By petrol18Radio = By.xpath("//label[text()='1.8 Petrol, 118kW']/preceding-sibling::span/input");
+        By petrol14Radio = By.xpath("//label[text()='1.4 Petrol, 92kW']/preceding-sibling::span/input");
+
+        // Chọn
+        if (!driver.findElement(petrol18Radio).isSelected()) {
+            driver.findElement(petrol18Radio).click();
+        }
+
+        // Verify
+        Assert.assertTrue(driver.findElement(petrol18Radio).isSelected()); // Selected
+        Assert.assertFalse(driver.findElement(petrol14Radio).isSelected()); // Deselected
+
+        // Bỏ chọn = chọn qua 1 item khác
+        if (!driver.findElement(petrol14Radio).isSelected()) {
+            driver.findElement(petrol14Radio).click();
+        }
+
+        // Verify
+        Assert.assertFalse(driver.findElement(petrol18Radio).isSelected()); // Deselected
+        Assert.assertTrue(driver.findElement(petrol14Radio).isSelected()); // Selected
+
 
     }
 
