@@ -69,16 +69,21 @@ public class Selenium_09_Custom_Checkbox_Radio {
         driver.get("https://docs.google.com/forms/d/e/1FAIpQLSfiypnd69zhuDkjKgqvpID9kwO29UCzeCVrGGtbNPZXQok0jA/viewform");
 
         By quangnamCheckbox = By.xpath("//div[@aria-label='Quảng Nam']");
+        By hanoiRadio = By.xpath("//div[@aria-label='Hà Nội']");
 
-        // Verify Deselected
+        // Verify checkbox Quảng Nam Deselected
         Assert.assertEquals(driver.findElement(quangnamCheckbox).getDomAttribute("aria-checked"),"false");
-
-        // Click
+        // Click checkbox Quảng Nam
         driver.findElement(quangnamCheckbox).click();
-
-        // Verify Selected
+        // Verify checkbox Quảng Nam Selected
         Assert.assertEquals(driver.findElement(quangnamCheckbox).getDomAttribute("aria-checked"),"true");
 
+        // Verify radio button Hà Nội Deselected
+        Assert.assertEquals(driver.findElement(hanoiRadio).getDomAttribute("aria-checked"),"false");
+        // Click radio button Hà Nội
+        driver.findElement(hanoiRadio).click();
+        // Verify radio button Hà Nội Selected
+        Assert.assertEquals(driver.findElement(hanoiRadio).getDomAttribute("aria-checked"),"true");
     }
 
     @AfterClass
