@@ -8,7 +8,7 @@ import org.testng.annotations.Test;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
-public class Playwright_10_Button_Checkbox_Radio {
+public class Playwright_10_Button {
     Playwright playwright;
     Browser browser;
     Page page;
