@@ -25,10 +25,6 @@ public class Playwright_12_Alert {
     @Test
     public void TC_01_alert_livetechpanda() {
         page.navigate("https://live.techpanda.org/index.php/");
-        // Alert = Dialog
-        //page.onDialog();
-       // page.onceDialog();
-        //
 
         page.locator("//a[text()='Mobile']").click();
 
@@ -41,19 +37,23 @@ public class Playwright_12_Alert {
         page.locator("a[title='Samsung Galaxy']~div>div.actions a.link-compare").click();
         Assert.assertTrue(page.locator("//span[text()='The product Samsung Galaxy has been added to comparison list.']").isVisible());
 
-        page.locator("//a[text()='Clear All']").click();
-
         // Viết code xử lý Alert trước rồi mới click cho Alert xuất hiện sau
         page.onDialog(dialog -> {
-            //Assert.assertTrue(dialog.type(),"confirm");
+            // Verify là Alert confirm
+            Assert.assertEquals(dialog.type(),"confirm");
 
             // Verify message
             Assert.assertEquals(dialog.message(),"Are you sure you would like to remove all products from your comparison?");
 
-            //Accept
+            System.out.println("Alert type = " + dialog.type());
+            System.out.println("Alert message = " + dialog.message());
+
+            //Accept Alert
             dialog.accept();
-            Assert.assertTrue(page.locator("//span[text()='The comparison list was cleared.']").isVisible());
         });
+
+        page.locator("//a[text()='Clear All']").click();
+        Assert.assertTrue(page.locator("//span[text()='The comparison list was cleared.']").isVisible());
     }
 
     @Test
@@ -67,7 +67,7 @@ public class Playwright_12_Alert {
         });
 
         page.locator("//button[text()='Click for JS Prompt']").click();
-
+        Assert.assertEquals(page.locator("p#result").textContent(),"You entered: " + text);
 
     }
 
