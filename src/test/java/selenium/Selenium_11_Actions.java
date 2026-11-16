@@ -12,7 +12,7 @@ import java.time.Duration;
 
 public class Selenium_11_Actions {
     WebDriver driver;
-    Actions actions;
+    Actions actions; // Khai báo
 
     @BeforeClass
     public void beforeClass(){
@@ -20,7 +20,7 @@ public class Selenium_11_Actions {
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
 
-        actions = new Actions(driver);
+        actions = new Actions(driver); // Khởi tạo
     }
 
     @Test
