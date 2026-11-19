@@ -100,6 +100,59 @@ public class Selenium_11_Actions {
 
     }
 
+    @Test
+    public void TC_06_RightClick() {
+        driver.get("http://swisnl.github.io/jQuery-contextMenu/demo.html");
+
+        actions.contextClick(driver.findElement(By.xpath("//span[text()='right click me']"))).perform();
+        actions.pause(Duration.ofSeconds(2)).perform();
+
+        // Not hover - visible
+        Assert.assertTrue(driver.findElement(By.cssSelector("li.context-menu-icon-quit")).isDisplayed());
+
+        actions.moveToElement(driver.findElement(By.cssSelector("li.context-menu-icon-quit"))).perform();
+        actions.pause(Duration.ofSeconds(2)).perform();
+
+        // hover - visible
+        Assert.assertTrue(driver.findElement(By.cssSelector("li.context-menu-icon-quit.context-menu-visible.context-menu-hover")).isDisplayed());
+
+        // Click
+        driver.findElement(By.cssSelector("li.context-menu-icon-quit")).click();
+        actions.pause(Duration.ofSeconds(2)).perform();
+
+        driver.switchTo().alert().accept();
+        actions.pause(Duration.ofSeconds(2)).perform();
+
+        // Not visible
+        Assert.assertTrue(driver.findElement(By.cssSelector("li.context-menu-icon-quit")).isDisplayed());
+
+    }
+
+    @Test
+    public void TC_07_Drag_Drop() {
+        driver.get("https://automationfc.github.io/kendo-drag-drop/");
+        WebElement sourceCircle = driver.findElement(By.cssSelector("div#draggable"));
+        WebElement targetCircle = driver.findElement(By.cssSelector("div#droptarget"));
+
+        actions.dragAndDrop(sourceCircle, targetCircle).pause(Duration.ofSeconds(2)).perform();
+
+        Assert.assertEquals(targetCircle.getText(),"");
+
+    }
+
+    @Test
+    public void TC_08_Drag_Drop_HTML5() {
+        driver.get("https://automationfc.github.io/drag-drop-html5/");
+        WebElement source = driver.findElement(By.cssSelector("div#column-a"));
+        WebElement target = driver.findElement(By.cssSelector("div#column-b"));
+
+        actions.dragAndDrop(source, target).pause(Duration.ofSeconds(2)).perform();
+        actions.dragAndDrop(source, target).pause(Duration.ofSeconds(2)).perform();
+
+        Assert.assertEquals(target.getText(),"");
+
+    }
+
     @AfterClass
     public void afterClass(){
         driver.quit();
