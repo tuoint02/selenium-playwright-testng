@@ -3,6 +3,7 @@ package selenium;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.Color;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -90,10 +91,12 @@ public class Selenium_11_Actions {
     }
 
     @Test
-    public void TC_05_Double() {
+    public void TC_05_Double_Click() {
         driver.get("https://automationfc.github.io/basic-form/index.html");
 
-        jsExecutor.executeScript("arguments[0].scrollIntoView(true);", driver.findElement(By.xpath("//button[text()='Double click me']"))); // Dùng khi chạy với trình duyệt FireFox, các trình duyệt khác không cần
+        if (driver.toString().contains("Firefox")){
+            jsExecutor.executeScript("arguments[0].scrollIntoView(true);", driver.findElement(By.xpath("//button[text()='Double click me']"))); // Dùng khi chạy với trình duyệt FireFox, các trình duyệt khác không cần
+        }
 
         actions.doubleClick(driver.findElement(By.xpath("//button[text()='Double click me']"))).perform();
         Assert.assertEquals(driver.findElement(By.cssSelector("p#demo")).getText(),"Hello Automation Guys!");
@@ -101,7 +104,7 @@ public class Selenium_11_Actions {
     }
 
     @Test
-    public void TC_06_RightClick() {
+    public void TC_06_Right_Click() throws InterruptedException {
         driver.get("http://swisnl.github.io/jQuery-contextMenu/demo.html");
 
         actions.contextClick(driver.findElement(By.xpath("//span[text()='right click me']"))).perform();
@@ -118,25 +121,27 @@ public class Selenium_11_Actions {
 
         // Click
         driver.findElement(By.cssSelector("li.context-menu-icon-quit")).click();
-        actions.pause(Duration.ofSeconds(2)).perform();
+        Thread.sleep(2000);
 
         driver.switchTo().alert().accept();
         actions.pause(Duration.ofSeconds(2)).perform();
 
         // Not visible
-        Assert.assertTrue(driver.findElement(By.cssSelector("li.context-menu-icon-quit")).isDisplayed());
-
+        Assert.assertFalse(driver.findElement(By.cssSelector("li.context-menu-icon-quit")).isDisplayed());
     }
 
     @Test
-    public void TC_07_Drag_Drop() {
+    public void TC_07_Drag_Drop_HTML4() {
         driver.get("https://automationfc.github.io/kendo-drag-drop/");
         WebElement sourceCircle = driver.findElement(By.cssSelector("div#draggable"));
         WebElement targetCircle = driver.findElement(By.cssSelector("div#droptarget"));
 
         actions.dragAndDrop(sourceCircle, targetCircle).pause(Duration.ofSeconds(2)).perform();
 
-        Assert.assertEquals(targetCircle.getText(),"");
+        Assert.assertEquals(targetCircle.getText(),"You did great!");
+
+        // Verify màu nền
+        Assert.assertEquals(Color.fromString(targetCircle.getCssValue("background-color")).asHex().toUpperCase(),"#C92127");
 
     }
 
