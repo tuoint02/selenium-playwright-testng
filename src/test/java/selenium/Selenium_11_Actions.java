@@ -141,7 +141,7 @@ public class Selenium_11_Actions {
         Assert.assertEquals(targetCircle.getText(),"You did great!");
 
         // Verify màu nền
-        Assert.assertEquals(Color.fromString(targetCircle.getCssValue("background-color")).asHex().toUpperCase(),"#C92127");
+        Assert.assertEquals(Color.fromString(targetCircle.getCssValue("background-color")).asHex().toUpperCase(),"#03A9F4");
 
     }
 
