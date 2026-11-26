@@ -10,6 +10,8 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import javax.swing.*;
+import java.io.*;
+import java.nio.charset.Charset;
 import java.time.Duration;
 import java.util.List;
 
@@ -146,20 +148,41 @@ public class Selenium_11_Actions {
     }
 
     @Test
-    public void TC_08_Drag_Drop_HTML5() {
+    public void TC_08_Drag_Drop_HTML5() throws IOException {
         driver.get("https://automationfc.github.io/drag-drop-html5/");
         WebElement source = driver.findElement(By.cssSelector("div#column-a"));
         WebElement target = driver.findElement(By.cssSelector("div#column-b"));
 
-        actions.dragAndDrop(source, target).pause(Duration.ofSeconds(2)).perform();
-        actions.dragAndDrop(source, target).pause(Duration.ofSeconds(2)).perform();
+        String jsContent = getContentFile(System.getProperty("user.dir")+"\\dragDrop\\drapDrop.js");
 
-        Assert.assertEquals(target.getText(),"");
+        jsExecutor.executeScript(jsContent);
+        Assert.assertEquals(driver.findElement(By.cssSelector("div#column-b>header")).getText(),"A");
+        Assert.assertEquals(driver.findElement(By.cssSelector("div#column-a>header")).getText(),"B");
 
+        jsExecutor.executeScript(jsContent);
+        Assert.assertEquals(driver.findElement(By.cssSelector("div#column-b>header")).getText(),"B");
+        Assert.assertEquals(driver.findElement(By.cssSelector("div#column-a>header")).getText(),"A");
     }
 
     @AfterClass
     public void afterClass(){
         driver.quit();
+    }
+
+    public String getContentFile(String filePath) throws IOException {
+        Charset cs = Charset.forName("UTF-8");
+        FileInputStream stream = new FileInputStream(filePath);
+        try {
+            Reader reader = new BufferedReader(new InputStreamReader(stream, cs));
+            StringBuilder builder = new StringBuilder();
+            char[] buffer = new char[8192];
+            int read;
+            while ((read = reader.read(buffer, 0, buffer.length)) > 0) {
+                builder.append(buffer, 0, read);
+            }
+            return builder.toString();
+        } finally {
+            stream.close();
+        }
     }
 }
